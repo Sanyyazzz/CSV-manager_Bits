@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Portfolio\\CSV_Manager\\CSV_Manager.csproj": {}
+    "D:\\Portfolio\\Contact Manager\\csv-manager_api\\CSV_Manager.csproj": {}
   },
   "projects": {
-    "D:\\Portfolio\\CSV_Manager\\CSV_Manager.csproj": {
+    "D:\\Portfolio\\Contact Manager\\csv-manager_api\\CSV_Manager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Portfolio\\CSV_Manager\\CSV_Manager.csproj",
+        "projectUniqueName": "D:\\Portfolio\\Contact Manager\\csv-manager_api\\CSV_Manager.csproj",
         "projectName": "CSV_Manager",
-        "projectPath": "D:\\Portfolio\\CSV_Manager\\CSV_Manager.csproj",
+        "projectPath": "D:\\Portfolio\\Contact Manager\\csv-manager_api\\CSV_Manager.csproj",
         "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "D:\\Portfolio\\CSV_Manager\\obj\\",
+        "outputPath": "D:\\Portfolio\\Contact Manager\\csv-manager_api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,24 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
