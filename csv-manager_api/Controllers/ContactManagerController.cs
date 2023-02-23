@@ -16,10 +16,14 @@ namespace CSV_Manager.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<Contact> GetContacts()
+        [HttpGet("contacts/sort")]
+        public IEnumerable<Contact> GetContacts(
+            string? sort = null, string? method = null)
         {
-            return context.Contacts.ToList();
+            var contacts = context.Contacts.ToList();
+            var sortMethod = new SortParams(sort, method);
+
+            return sortMethod.GetSortingList(contacts);
         }
 
         [HttpGet("{id}")]
