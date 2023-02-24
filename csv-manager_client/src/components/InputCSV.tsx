@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {postCSV} from "../sideEffectFunction/fetchRequest";
 
 const InputCSV = () => {
@@ -15,15 +15,29 @@ const InputCSV = () => {
     const onChangeSalary = (e : React.ChangeEvent<HTMLInputElement>) => setSalary(e.target.value)
 
     const onAddCsv = () => {
-        let newContact = {
-            name: name,
-            dateOfBirthday: dateOfBirth,
-            isMarried: isMarried,
-            phoneNumber: phoneNumber,
-            salary: salary
-        }
+        if(name == ""){
+            alert("Please input name")
+            return
+        }else if(dateOfBirth == ""){
+            alert("Please input date of birthday")
+            return
+        }else if(phoneNumber == ""){
+            alert("Please input phone number")
+            return
+        }else if(salary == ""){
+            alert("Please input salary")
+            return
+        }else{
+            let newContact = {
+                name: name,
+                dateOfBirthday: dateOfBirth,
+                isMarried: isMarried,
+                phoneNumber: phoneNumber,
+                salary: salary
+            }
 
-       postCSV("https://localhost:7007/ContactManager", newContact)
+            postCSV("https://localhost:7007/ContactManager", newContact)
+        }
     }
 
     return(
@@ -42,7 +56,7 @@ const InputCSV = () => {
             </div>
             <div>
                 <label>Phone:</label>
-                <input type="tel" id="phoneNumber" onChange={onChangePhoneNum} /><br/>
+                <input type="tel" id="phoneNumber" onChange={onChangePhoneNum}  maxLength={13} /><br/>
             </div>
             <div>
                 <label>Salary:</label>

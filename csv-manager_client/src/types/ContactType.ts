@@ -1,16 +1,8 @@
 export type ContactType = {
-    ID: number,
+    id: number,
     name: string,
-    dateOfBirthday: Date,
+    dateOfBirthday: string,
     phoneNumber: string,
     salary: number,
     isMarried: boolean
-}
-
-export type NewContactType = {
-    Name: string,
-    DateOfBirthday: Date,
-    PhoneNumber: string,
-    Salary: number,
-    IsMarried: boolean
 }

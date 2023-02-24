@@ -69,7 +69,7 @@ namespace CSV_Manager.Controllers
                     editingContact.IsMarried = newContact.IsMarried;
                     editingContact.Salary = newContact.Salary;
 
-                    context.SaveChangesAsync();
+                    context.SaveChanges();
                     return Ok();
                 }
 

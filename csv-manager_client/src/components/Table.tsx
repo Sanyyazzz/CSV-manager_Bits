@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ContactType} from "../types/ContactType";
 import {SortParamsEnum} from "../types/SortParamsType";
-import {getListOfCSV} from "../sideEffectFunction/fetchRequest";
+import {deleteCSV, getListOfCSV, updateCSV} from "../sideEffectFunction/fetchRequest";
 import TableRow from "./TableRow";
+import {ConvertToFormatDate} from "../helper/ConvertToFormatDate";
 
 const Table = () => {
     const [listOfCSV, setListOfCSV] = useState<ContactType[] | any>();
@@ -10,6 +11,7 @@ const Table = () => {
     const[sort, setSort] = useState("null")
     const[method, setMethod] = useState(SortParamsEnum.null)
     const[activeTabOfSort, setActiveTabOfSort] = useState<number>(-1)
+    const[activeEditRow, setActiveEditRow] = useState(false)
     const headRow = useRef<any>()
 
     //method that change style for active sort tab
@@ -32,9 +34,7 @@ const Table = () => {
         }
     }
 
-    const onSortTableByName = (event : React.MouseEvent<HTMLTableHeaderCellElement>) => {
-        const element = event.target as HTMLTableHeaderCellElement;
-
+    const onSortTableByName = () => {
         if(sort != "name"){
             setSort("name")
             setMethod(SortParamsEnum.orderBy)
@@ -45,9 +45,7 @@ const Table = () => {
             setMethod(SortParamsEnum.null)
         }
     }
-    const onSortTableByDate = (event : React.MouseEvent<HTMLTableHeaderCellElement>) => {
-        const element = event.target as HTMLTableHeaderCellElement;
-
+    const onSortTableByDate = () => {
         if(sort != "dateOfBirth"){
             setSort("dateOfBirth")
             setMethod(SortParamsEnum.orderBy)
@@ -58,9 +56,7 @@ const Table = () => {
             setMethod(SortParamsEnum.null)
         }
     }
-    const onSortTableByIsMarried = (event : React.MouseEvent<HTMLTableHeaderCellElement>) => {
-        const element = event.target as HTMLTableHeaderCellElement;
-
+    const onSortTableByIsMarried = () => {
         if(sort != "isMarried"){
             setSort("isMarried")
             setMethod(SortParamsEnum.orderBy)
@@ -71,9 +67,7 @@ const Table = () => {
             setMethod(SortParamsEnum.null)
         }
     }
-    const onSortTableBySalary = (event : React.MouseEvent<HTMLTableHeaderCellElement>) => {
-        const element = event.target as HTMLTableHeaderCellElement;
-
+    const onSortTableBySalary = () => {
         if(sort != "salary"){
             setSort("salary")
             setMethod(SortParamsEnum.orderBy)
@@ -85,24 +79,53 @@ const Table = () => {
         }
     }
 
-    useEffect(()=>{
-        getListOfCSV(`https://localhost:7007/ContactManager/contacts/sort?sort=${sort}&method=${SortParamsEnum[method]}`)
-            .then(data => setListOfCSV(data))
-    }, [sort, method])
+
+    const onSaveCsv = (contact : ContactType) => {
+        updateCSV("https://localhost:7007/ContactManager", contact)
+        let newList = [...listOfCSV]
+        let index = listOfCSV.findIndex((c:ContactType)=>c.id == contact.id)
+        newList.splice(index, 1, contact)
+        setListOfCSV(newList)
+        setActiveEditRow(false);
+    }
+
+    const onDeleteCsv = (id : number) => {
+        let index = listOfCSV.find((c:ContactType)=>c.id == id)
+
+        if(window.confirm("Delete CSV: "+ index.name +"?")){
+            deleteCSV(`https://localhost:7007/ContactManager/${id}`)
+            let newList = [...listOfCSV]
+            newList.splice(index, 1)
+            setListOfCSV(newList)
+        }
+    }
 
     let tableRows = listOfCSV && listOfCSV.map((contact : ContactType)=>{
-            return <TableRow contact={contact}/>
-        })
+        return <TableRow
+            contact={contact}
+            onSaveCvs={onSaveCsv}
+            onDeleteCvs={onDeleteCsv}
+            activeEditRow={activeEditRow}
+            setActiveEditRow={setActiveEditRow}
+        />
+    });
+
+    useEffect(()=>{
+        getListOfCSV(`https://localhost:7007/ContactManager/contacts/sort?sort=${sort}&method=${SortParamsEnum[method]}`)
+            .then(data => ConvertToFormatDate(data))
+            .then(data => setListOfCSV(data))
+        //setListOfCSV( [{id:1, name: 'Oleksandr', dateOfBirthday: "2022-10-05", isMarried: true, phoneNumber: "+3809526565", salary: 500}])
+    }, [sort, method])
 
     return(
         <table>
             <thead>
                 <tr key={0} onClick={(e)=>onRowTableHandler(e)} ref={headRow}>
-                    <th onClick={(e)=>onSortTableByName(e)}>Name</th>
-                    <th onClick={(e)=>onSortTableByDate(e)}>Date of birth</th>
-                    <th onClick={(e)=>onSortTableByIsMarried(e)}>Married</th>
+                    <th onClick={onSortTableByName}>Name</th>
+                    <th onClick={onSortTableByDate}>Date of birth</th>
+                    <th onClick={onSortTableByIsMarried}>Married</th>
                     <th>Phone</th>
-                    <th onClick={(e)=>onSortTableBySalary(e)}>Salary ($)</th>
+                    <th onClick={onSortTableBySalary}>Salary ($)</th>
                     <th></th>
                 </tr>
             </thead>
