@@ -1,4 +1,5 @@
 using CSV_Manager.Models;
+using CSV_Manager.Providers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSV_Manager.Controllers
@@ -7,47 +8,43 @@ namespace CSV_Manager.Controllers
     [Route("[controller]")]
     public class ContactManagerController : ControllerBase
     {
-        private readonly CsvManagerDbContext context;
-        private readonly ILogger<ContactManagerController> _logger;
+        private readonly IContactProvider contactProvider;
+        private readonly ILogger<ContactManagerController> logger;        
 
-        public ContactManagerController(CsvManagerDbContext context, ILogger<ContactManagerController> logger)
+        public ContactManagerController(IContactProvider contactProvider, ILogger<ContactManagerController> logger)
         {
-            this.context = context;
-            _logger = logger;
+            this.contactProvider = contactProvider;
+            this.logger = logger;
         }
 
         [HttpGet("contacts/sort")]
         public IEnumerable<Contact> GetContacts(
-            string? sort = null, string? method = null)
+            string? sort = null, string? method = null
+            )
         {
-            var contacts = context.Contacts.ToList();
-            var sortMethod = new SortParams(sort, method);
-
-            return sortMethod.GetSortingList(contacts);
+            return contactProvider.GetContactsAsync(sort, method).Result;
         }
 
         [HttpGet("{id}")]
         public IActionResult GetContactById(int id)
         {
-            var contactById = context.Contacts.Where(c => c.Id == id).Single();
-
-            if(contactById != null)
+            try
             {
-                return Ok(contactById);
+                var contact = contactProvider.GetContactByIdAsync(id).Result;
+                return Ok(contact);
             }
-
-            return NotFound();
+            catch (ArgumentException)
+            {
+                return NotFound($"User with ID:{id} doesn't exist");
+            }
         }
 
         [HttpPost]
         public IActionResult AddContact([FromBody] InputContact addingContact)
         {
-            var contact = new Contact(addingContact);
-
             if (ModelState.IsValid)
             {
-                context.Contacts.Add(contact);
-                context.SaveChanges();
+                var id = contactProvider.AddContactAsync(addingContact).Result;
                 return Ok();
             }
 
@@ -57,41 +54,37 @@ namespace CSV_Manager.Controllers
         [HttpPut]
         public IActionResult UpdateContact([FromBody] Contact newContact)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var editingContact = context.Contacts.Where(c => c.Id == newContact.Id).Single();
-
-                if(editingContact != null)
+                if (ModelState.IsValid)
                 {
-                    editingContact.Name = newContact.Name;
-                    editingContact.DateOfBirthday = newContact.DateOfBirthday;
-                    editingContact.PhoneNumber = newContact.PhoneNumber;
-                    editingContact.IsMarried = newContact.IsMarried;
-                    editingContact.Salary = newContact.Salary;
-
-                    context.SaveChanges();
-                    return Ok();
+                    contactProvider.UpdateContactAsync(newContact);                    
                 }
 
-                return NotFound();
+                return Ok();
             }
-
-            return BadRequest();
+            catch (ArgumentException)
+            {
+                return NotFound($"User with ID:{newContact.Id} doesn't exist");
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteContactById(int id)
         {
-            var contactById = context.Contacts.Where(c => c.Id == id).Single();
-
-            if (contactById != null)
+            try
             {
-                context.Contacts.Remove(contactById);
-                context.SaveChanges();
+                contactProvider.DeleteContact(id);
                 return Ok();
             }
-
-            return BadRequest();
+            catch(ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

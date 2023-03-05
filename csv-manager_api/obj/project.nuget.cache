@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ITfw4viQpNu7BD2NRKosr5RjMX1tu7weuVT1mQY1NUDpjUnoE0qwgxduWpUsfNHrxajkl1+YyQssc7Qc9hZJcg==",
+  "dgSpecHash": "iUd5hPvQfY32zhaGZfL97+frsiIn/t/sFHzd9eMTo/nENerIamj2keYPgGv44jQo7XkRIUm8ru1LaSkWXYmUhQ==",
   "success": true,
   "projectFilePath": "D:\\Portfolio\\Contact Manager\\csv-manager_api\\CSV_Manager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\1\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\1\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

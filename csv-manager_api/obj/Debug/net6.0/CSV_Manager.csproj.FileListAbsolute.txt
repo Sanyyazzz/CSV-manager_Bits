@@ -81,3 +81,4 @@ D:\Portfolio\Contact Manager\csv-manager_api\obj\Debug\net6.0\refint\CSV_Manager
 D:\Portfolio\Contact Manager\csv-manager_api\obj\Debug\net6.0\CSV_Manager.pdb
 D:\Portfolio\Contact Manager\csv-manager_api\obj\Debug\net6.0\CSV_Manager.genruntimeconfig.cache
 D:\Portfolio\Contact Manager\csv-manager_api\obj\Debug\net6.0\ref\CSV_Manager.dll
+D:\Portfolio\Contact Manager\csv-manager_api\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

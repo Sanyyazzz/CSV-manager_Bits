@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Xwep7W4djPZdN5Ie5Cou8OLlMV7GrAk7Tn9dvbsaQNPuLJuzUAhjF7GMyIDBdyBv0pTxfLlQFRyN/z/6/J6TrA==",
+  "dgSpecHash": "NAImyEgakdPLvhw5K1IoXgCrV34Qp/0t+BUleFaMGWHmIyxU2ga1rn9oREPr+hRExYbEUG4dMw3PUcldrs0VTw==",
   "success": true,
   "projectFilePath": "D:\\Portfolio\\Contact Manager\\UnitTestForProject\\UnitTestForProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\1\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\1\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",

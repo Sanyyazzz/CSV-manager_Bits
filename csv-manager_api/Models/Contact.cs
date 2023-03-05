@@ -11,16 +11,6 @@ public partial class Contact
            
     }
 
-    public Contact(InputContact inputContact)
-    {
-        Id = 0;
-        Name = inputContact.Name;
-        DateOfBirthday = inputContact.DateOfBirthday;
-        IsMarried = inputContact.IsMarried;
-        PhoneNumber = inputContact.PhoneNumber;
-        Salary = inputContact.Salary;
-    }
-
     [Key]
     public int Id { get; set; }
 

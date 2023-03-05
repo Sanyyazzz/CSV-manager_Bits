@@ -1,4 +1,6 @@
-﻿namespace CSV_Manager.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace CSV_Manager.Models
 {
     public class SortParams
     {
@@ -11,34 +13,35 @@
         public string FieldOfSort { get; set; } = null;
         public string MethodOfSort { get; set; } = null;
 
-        public IEnumerable<Contact> GetSortingList(List<Contact> list)
+        public async Task<IEnumerable<Contact>> GetSortingListAsync(CsvManagerDbContext context)
         {
-            var sortingList = list;
+            var sortingList = new List<Contact>();
 
             switch (FieldOfSort)
             {
                 case "name":
-                    if (MethodOfSort == "orderBy") sortingList = list.OrderBy(c => c.Name).ToList();
-                    if (MethodOfSort == "orderByDesc") sortingList = list.OrderByDescending(c => c.Name).ToList();                
+                    if (MethodOfSort == "orderBy") sortingList = await context.Contacts.OrderBy(c => c.Name).ToListAsync();
+                    if (MethodOfSort == "orderByDesc") sortingList = await context.Contacts.OrderByDescending(c => c.Name).ToListAsync();                
                         
                     break;
 
                 case "dateOfBirth":
-                    if (MethodOfSort == "orderBy") sortingList = list.OrderBy(c => c.DateOfBirthday).ToList();
-                    if (MethodOfSort == "orderByDesc") sortingList = list.OrderByDescending(c => c.DateOfBirthday).ToList();
+                    if (MethodOfSort == "orderBy") sortingList = await context.Contacts.OrderBy(c => c.DateOfBirthday).ToListAsync();
+                    if (MethodOfSort == "orderByDesc") sortingList = await context.Contacts.OrderByDescending(c => c.DateOfBirthday).ToListAsync();
                     break;
 
                 case "isMarried":
-                    if (MethodOfSort == "orderBy") sortingList = list.OrderBy(c => c.IsMarried).ToList();
-                    if (MethodOfSort == "orderByDesc") sortingList = list.OrderByDescending(c => c.IsMarried).ToList();
+                    if (MethodOfSort == "orderBy") sortingList = await context.Contacts.OrderBy(c => c.IsMarried).ToListAsync();
+                    if (MethodOfSort == "orderByDesc") sortingList = await context.Contacts.OrderByDescending(c => c.IsMarried).ToListAsync();
                     break;
 
                 case "salary":
-                    if (MethodOfSort == "orderBy") sortingList = list.OrderBy(c => c.Salary).ToList();
-                    if (MethodOfSort == "orderByDesc") sortingList = list.OrderByDescending(c => c.Salary).ToList();
+                    if (MethodOfSort == "orderBy") sortingList = await context.Contacts.OrderBy(c => c.Salary).ToListAsync();
+                    if (MethodOfSort == "orderByDesc") sortingList = await context.Contacts.OrderByDescending(c => c.Salary).ToListAsync();
                     break;
 
-                default: 
+                default:
+                    sortingList = await context.Contacts.ToListAsync();
                     break;
             }
 
